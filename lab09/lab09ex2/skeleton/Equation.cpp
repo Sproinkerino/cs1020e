@@ -15,7 +15,7 @@
 #include <string>
 using namespace std;
 
-const int alphabetSize = 'G' - 'A' + 1;
+const int alphabetSize = 'G' - 'A' + 1; //7
 
 
 class Equation {
@@ -42,19 +42,50 @@ private:
         return value;
     }
 
-
+    
     int countSolutions( char ch ) {
-
+        //A initially can take 9 numbers
+        int sol = 0;
         // Add your code here.
-
+        
+        if(letterUsed[ch - 'A'] && ch <= 'G')
+        {
+            for(int i = 0; i <= 9; i++)
+            {
+                letterValue[ch - 'A'] = i;
+                sol = sol + countSolutions(ch + 1);
+               // cout << " A: " << letterValue[0];
+                //cout << " B: " << letterValue[1];
+                //cout << " C: " << letterValue[2] << endl;
+                //cout << sol <<endl;
+            }
+            
+        }
+        else if(ch <= 'G'){
+            return countSolutions(ch + 1);   
+        }
+        else
+        {
+            
+            if((getValue(strX) + getValue(strY)) == getValue(strZ))
+            {
+            //  cout << " A: " << letterValue[0];
+            //    cout << " B: " << letterValue[1];
+            //   cout << " C: " << letterValue[2] << endl;
+            //  cout << (getValue(strX) + getValue(strY)) << " " << getValue(strZ) << endl;
+                return 1;
+            }
+        }
+        //cout << sol << endl;
+        return sol;
     }
 
 public:
 
     Equation( string &X, string &Y, string &Z )
         : strX(X), strY(Y), strZ(Z) { }
-
-
+    // Letteruser [0] = A
+    
     int countSolutions() {
         unsigned i;
         for (i = 0; i < 10; i++) digitUsed[i] = false;
